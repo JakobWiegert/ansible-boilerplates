@@ -1,0 +1,7 @@
+﻿---
+- hosts: docker
+
+  tasks:
+    - name: Create external network
+      community.docker.docker_network:
+        name: exposed_web_network
