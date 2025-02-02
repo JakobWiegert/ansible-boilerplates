@@ -43,8 +43,8 @@
       #only for manual usage, see cronjob
     - name: Create NC DB Indexing Script
       copy:
-        dest: /etc/docker-ansible/nextcloud/indexing.sh
         src: ./docker/config/docker-nextcloud/indexing.sh
+        dest: /etc/docker-ansible/nextcloud/indexing.sh
         owner: "{{username}}"
         group: "{{groupname}}"
         mode: 0777
