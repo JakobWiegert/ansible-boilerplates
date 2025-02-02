@@ -1,0 +1,49 @@
+﻿---
+- hosts: '{{ host }}' 
+  vars_prompt:
+    - name: cf_dns_api_token
+      prompt: "Please enter your Cloudflare API Token, only DNS edit required, under Manage Account -> Account API Tokens -> Create Token -> Edit Zone DNS"
+      private: yes
+  vars:
+    username: jakob
+    groupname: docker
+
+  tasks:
+    - name: Creates directory for Configs
+      become: yes
+      ansible.builtin.file:
+        path: /etc/docker-ansible/traefik
+        state: directory
+        owner: "{{username}}"
+        group: "{{groupname}}"
+        mode: 0770
+        recurse: yes
+
+    - name: Creates directory for Certs
+      become: yes
+      ansible.builtin.file:
+        path: /etc/docker-ansible/docker-traefik/certs
+        state: directory
+        owner: "{{username}}"
+        group: "{{groupname}}"
+        mode: 0770
+        recurse: yes
+
+    - name: Create traefik config file
+      copy:
+        dest: /etc/docker-ansible/traefik/traefik.yaml
+        src: config/docker-traefik/traefik.yaml
+        owner: "{{username}}"
+        group: "{{groupname}}"
+        mode: 0770
+
+    - name: create traefik env
+      template:
+        src: config/docker-traefik/traefik.j2
+        dest: /etc/docker-traefik/traefik.env
+        owner: "{{username}}"
+        group: "{{groupname}}"
+        mode: 0660
+
+
+

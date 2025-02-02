@@ -1,0 +1,22 @@
+﻿---
+- hosts: docker
+
+  tasks:
+    - name: Deploy Traefik
+      community.docker.docker_container:
+        name: traefik
+        image: docker.io/library/traefik:latest
+        ports:
+          - "80:80"
+          - "443:443"
+          # --> (Optional) Enable Dashboard, don't do in production
+          #- "8081:8080"
+          # <--
+        volumes:
+          - "/run/docker.sock:/run/docker.sock:ro"
+          - "/etc/docker-ansible/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro"
+          - "/etc/docker-ansible/traefik/certs/:/var/traefik/certs/:rw"
+        env_file: /etc/docker-traefik/traefik.env
+        networks:
+          - name: exposed_web_network
+        restart_policy: unless-stopped

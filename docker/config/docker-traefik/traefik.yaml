@@ -1,0 +1,62 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+# --> (Optional) Change log level and format here ...
+#     - level: [TRACE, DEBUG, INFO, WARN, ERROR, FATAL]
+# log:
+#  level: ERROR
+# <--
+
+# --> (Optional) Enable accesslog here ...
+# accesslog: {}
+# <--
+
+api:
+  dashboard: false
+  insecure: false
+
+# -- Change EntryPoints here...
+entryPoints:
+  web:
+    address: :80
+    # --> (Optional) Redirect all HTTP to HTTPS
+    # http:
+    #  redirections:
+    #    entryPoint:
+    #      to: websecure
+    #      scheme: https
+    # <--
+  websecure:
+    address: :443
+
+# -- Configure your CertificateResolver here...
+certificatesResolvers:
+  cloudflare:
+    acme:
+      email: jakob.wiegert@gmail.com # <-- Change this to your email
+      storage: /var/traefik/certs/cloudflare-acme.json
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      dnsChallenge:
+        provider: cloudflare # <-- (Optional) Change this to your DNS provider
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
+
+# --> (Optional) Disable TLS Cert verification check
+# serversTransport:
+#   insecureSkipVerify: true
+# <--
+
+providers:
+  docker:
+    exposedByDefault: false  # <-- (Optional) Change this to true if you want to expose all services
+  file:
+    directory: /etc/traefik
+    watch: true
+
+accessLog: {}
+
+tracing: {}
+
+
