@@ -13,6 +13,13 @@
         volumes:
           - "NCMariaDB:/var/lib/mysql"
         env_file: /etc/docker-ansible/nextcloud/nc.env
+        healthcheck:
+          # If this fails or timeouts, the healthcheck fails.
+          test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+          interval: 10s
+          timeout: 10s
+          retries: 5
+          start_period: 190s
         restart_policy: on-failure
         networks:
           - name: nc-internal
@@ -24,16 +31,14 @@
         volumes:
           - "NCData:/var/www/html"
         env_file: /etc/docker-ansible/nextcloud/nc.env
-        depends_on:
-          - NCDatabase
         labels:
           - traefik.enable=true
           - traefik.http.routers.nextcloud.entrypoints=web
-          - traefik.http.routers.nextcloud.rule=Host(`cloud.int.itwiegert.cc`) || Host(`cloud.itwiegert.cc`)
+          - traefik.http.routers.nextcloud.rule=Host(`cloud.itwiegert.cc`)
           - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
           - traefik.http.routers.nextcloud.middlewares=nc-header,https-redirect
           - traefik.http.routers.nextcloud-secure.entrypoints=websecure
-          - traefik.http.routers.nextcloud-secure.rule=Host(`cloud.itwiegert.cc`) || Host(`cloud.int.itwiegert.cc`)
+          - traefik.http.routers.nextcloud-secure.rule=Host(`cloud.itwiegert.cc`)
           - traefik.http.middlewares.nc-rep.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav
           - traefik.http.middlewares.nc-rep.redirectregex.replacement=https://$$1/remote.php/dav/
           - traefik.http.middlewares.nc-rep.redirectregex.permanent=true
