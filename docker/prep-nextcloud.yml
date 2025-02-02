@@ -44,7 +44,7 @@
     - name: Create NC DB Indexing Script
       copy:
         dest: /etc/docker-ansible/nextcloud/indexing.sh
-        src: ./config/docker-nextcloud/indexing.sh
+        src: ./docker/config/docker-nextcloud/indexing.sh
         owner: "{{username}}"
         group: "{{groupname}}"
         mode: 0777
@@ -53,14 +53,14 @@
     - name: Create NC Cron Maintain Script
       copy:
         dest: /etc/docker-ansible/nextcloud/nc-cron.sh
-        src: ./config/docker-nextcloud/nc-cron.sh
+        src: ./docker/config/docker-nextcloud/nc-cron.sh
         owner: "{{username}}"
         group: "{{groupname}}"
         mode: 0777
 
     - name: create Nextcloud env
       template:
-        src: ./config/docker-nextcloud/nc.j2
+        src: ./docker/config/docker-nextcloud/nc.j2
         dest: /etc/docker-ansible/nextcloud/nc.env
         owner: "{{username}}"
         group: "{{groupname}}"
