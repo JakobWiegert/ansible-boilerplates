@@ -32,25 +32,24 @@
           - "nextcloud_NCData:/var/www/html"
         env_file: /etc/docker-ansible/nextcloud/nc.env
         labels:
-          traefik.enable=true
-          traefik.http.routers.nextcloud.entrypoints=web
-          traefik.http.routers.nextcloud.rule=Host(`cloud.itwiegert.cc`)
-          traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
-          traefik.http.routers.nextcloud.middlewares=nc-header,https-redirect
-          traefik.http.routers.nextcloud-secure.entrypoints=websecure
-          traefik.http.routers.nextcloud-secure.rule=Host(`cloud.itwiegert.cc`)
-          traefik.http.middlewares.nc-rep.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav
-          traefik.http.middlewares.nc-rep.redirectregex.replacement=https://$$1/remote.php/dav/
-          traefik.http.middlewares.nc-rep.redirectregex.permanent=true
-          traefik.http.middlewares.nc-header.headers.customFrameOptionsValue=SAMEORIGIN
-          traefik.http.middlewares.nc-header.headers.customResponseHeaders.Strict-Transport-Security=15552000
-          traefik.http.routers.nextcloud-secure.middlewares=nc-rep,nc-header
-          traefik.http.routers.nextcloud-secure.tls=true
-          traefik.http.routers.nextcloud-secure.tls.certresolver=cloudflare
-          traefik.http.routers.nextcloud-secure.service=nextcloud
-          traefik.http.services.nextcloud.loadbalancer.server.port=80
-          traefik.http.services.nextcloud.loadbalancer.passHostHeader=true
+          traefik.enable: "true"
+          traefik.http.routers.nextcloud.entrypoints: "web"
+          traefik.http.routers.nextcloud.rule: "Host(`cloud.itwiegert.cc`)"
+          traefik.http.middlewares.https-redirect.redirectscheme.scheme: "https"
+          traefik.http.routers.nextcloud.middlewares: "nc-header,https-redirect"
+          traefik.http.routers.nextcloud-secure.entrypoints: "websecure"
+          traefik.http.routers.nextcloud-secure.rule: "Host(`cloud.itwiegert.cc`)"
+          traefik.http.middlewares.nc-rep.redirectregex.regex: "https://(.*)/.well-known/(card|cal)dav"
+          traefik.http.middlewares.nc-rep.redirectregex.replacement: "https://$$1/remote.php/dav/"
+          traefik.http.middlewares.nc-rep.redirectregex.permanent: "true"
+          traefik.http.middlewares.nc-header.headers.customFrameOptionsValue: "SAMEORIGIN"
+          traefik.http.middlewares.nc-header.headers.customResponseHeaders.Strict-Transport-Security: "15552000"
+          traefik.http.routers.nextcloud-secure.middlewares: "nc-rep,nc-header"
+          traefik.http.routers.nextcloud-secure.tls: "true"
+          traefik.http.routers.nextcloud-secure.tls.certresolver: "cloudflare"
+          traefik.http.routers.nextcloud-secure.service: "nextcloud"
+          traefik.http.services.nextcloud.loadbalancer.server.port: "80"
+          traefik.http.services.nextcloud.loadbalancer.passHostHeader: "true"
         networks:
           - name: exposed_web_network
           - name: nc-internal
-
