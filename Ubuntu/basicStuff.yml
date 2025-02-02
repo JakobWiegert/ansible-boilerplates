@@ -4,8 +4,8 @@
   hosts: all
   vars: 
 #change the username and groupname to your username and groupname
-    username: john
-    groupname: doe
+    username: jakob
+    groupname: jakob
 
   tasks:
     - name: Install core packages
@@ -32,22 +32,22 @@
     - name: Download spaceship using get_url
       get_url:
         url: https://starship.rs/install.sh
-        dest: /home/"{{username}}"/install.sh
+        dest: /home/{{username}}/install.sh
         group: "{{groupname}}"
         owner: "{{username}}"
 
     - name: Execute the starship install script 
       become: true
-      command: sh /home/"{{username}}"/install.sh -f -y
+      command: sh /home/{{username}}/install.sh -f -y
 
     - name: Copy zsh config
       copy:
         src: ./config/.zshrc
-        dest: /home/"{{username}}"/.zshrc
+        dest: /home/{{username}}/.zshrc
 
-    - name: Create a Directory /home/"{{username}}"/nerdfonts
+    - name: Create a Directory /home/{{username}}/nerdfonts
       file:
-        path: /home/"{{username}}"/nerdfonts
+        path: /home/{{username}}/nerdfonts
         state: directory
         owner: "{{username}}"
         group: "{{groupname}}"
@@ -55,19 +55,19 @@
     - name: Clone a github repository nerfonts
       git:
         repo: https://github.com/ryanoasis/nerd-fonts
-        dest: /home/"{{username}}"/nerdfonts
+        dest: /home/{{username}}/nerdfonts
         depth: 1
         clone: yes
         update: yes
 
     - name: Install nerdfonts
       become: true
-      command: bash /home/"{{username}}"/nerdfonts/install.sh -q
+      command: bash /home/{{username}}/nerdfonts/install.sh -q
 
     - name: Copy Starship Conf
       copy:
         src: ./config/starship.toml
-        dest: /home/"{{username}}"/.config/starship.toml
+        dest: /home/{{username}}/.config/starship.toml
 
     - name: change user shell to zsh 
       become: yes
