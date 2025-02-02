@@ -23,8 +23,7 @@
           interval: 10s
           timeout: 10s
           retries: 5
-          start_interval: 190s
-
+          start_period: 190s
 
     - name: Deploy unifi-wlc
       community.docker.docker_container:
