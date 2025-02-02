@@ -31,8 +31,7 @@
         src: ./config/docker-unifi/init-mongo.sh
         owner: "{{username}}"
         group: "{{groupname}}"
-        mode: 0777
-        remote_src: yes
+        mode: 077
 
     - name: Save DB password
       template:
@@ -41,7 +40,6 @@
         owner: "{{username}}"
         group: "{{groupname}}"
         mode: 0660
-        remote_src: yes
 
     - name: create DB env
       template:
