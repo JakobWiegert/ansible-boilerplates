@@ -28,7 +28,7 @@
     - name: Create DB init Script
       copy:
         dest: /etc/docker-ansible/unifi-wlc/init-mongo.sh
-        src: ./docker/config/docker-unifi/init-mongo.sh
+        src: ./config/docker-unifi/init-mongo.sh
         owner: "{{username}}"
         group: "{{groupname}}"
         mode: 0777
@@ -36,7 +36,7 @@
 
     - name: Save DB password
       template:
-        src: ./docker/config/docker-unifi/db_password.j2
+        src: ./config/docker-unifi/db_password.j2
         dest: /etc/docker-ansible/unifi-wlc/db_password.txt
         owner: "{{username}}"
         group: "{{groupname}}"
@@ -45,7 +45,7 @@
 
     - name: create DB env
       template:
-        src: ./docker/config/docker-unifi/unifi-db.j2
+        src: ./config/docker-unifi/unifi-db.j2
         dest: /etc/docker-ansible/unifi-wlc/unifi-db.env
         owner: "{{username}}"
         group: "{{groupname}}"
@@ -53,7 +53,7 @@
 
     - name: create WLC env
       template:
-        src: ./docker/config/docker-unifi/unifi-network-application.j2
+        src: ./config/docker-unifi/unifi-network-application.j2
         dest: /etc/docker-ansible/unifi-wlc/unifi-network-application.env
         owner: "{{username}}"
         group: "{{groupname}}"
