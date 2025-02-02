@@ -4,12 +4,12 @@
   become: true
 
   tasks:
-    - name: Update
+    - name: Update Apt
       when: ansible_pkg_mgr == 'apt'
       ansible.builtin.apt:
         update_cache: true
 
-    - name: Upgrade
+    - name: Upgrade Apt
       when: ansible_pkg_mgr == 'apt'
       ansible.builtin.apt:
         upgrade: dist

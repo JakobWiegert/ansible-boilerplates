@@ -1,9 +1,9 @@
 ---
 - name: Install Docker Ubuntu
-  hosts: all
+  hosts: docker
   vars:
     #change the username to your username
-    username: john 
+    username: jakob
   become: true
 
   tasks:
