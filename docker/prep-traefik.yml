@@ -40,7 +40,7 @@
     - name: create traefik env
       template:
         src: config/docker-traefik/traefik.j2
-        dest: /etc/docker-traefik/traefik.env
+        dest: /etc/docker-ansible/traefik.env
         owner: "{{username}}"
         group: "{{groupname}}"
         mode: 0660
