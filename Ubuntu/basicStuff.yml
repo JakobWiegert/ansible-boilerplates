@@ -80,6 +80,6 @@
       become: yes
       lineinfile:
         path: /etc/sudoers
-        line: "{{username}}" ALL=(ALL:ALL) NOPASSWD:ALL"
+        line: "{{username}} ALL=(ALL:ALL) NOPASSWD:ALL"
         state: present
         validate: visudo -cf %s
