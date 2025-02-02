@@ -1,0 +1,82 @@
+﻿---
+- hosts: '{{ host }}' 
+  vars:
+    username: jakob
+    groupname: docker
+
+  tasks:
+
+    - name: Generate DB PW
+      set_fact:
+        db_password: "{{ lookup('community.general.random_string', length=32, min_lower=1, min_upper=1, min_numeric=1, special=false) }}"
+
+    - name: Verify the generated password
+      debug:
+        var: db_password
+
+    - name: Generate nc db password
+      set_fact:
+        db_nc_password: "{{ lookup('community.general.random_string', length=32, min_lower=1, min_upper=1, min_numeric=1, special=false) }}"
+
+    - name: Verify the generated password
+      debug:
+        var: db_nc_password
+
+    - name: Generate Admin PW
+      set_fact:
+        admin_password: "{{ lookup('community.general.random_string', length=32, min_lower=1, min_upper=1, min_numeric=1, special=false) }}"
+
+    - name: Verify the generated password
+      debug:
+        var: admin_password
+
+    - name: Creates directory for Configs
+      become: yes
+      ansible.builtin.file:
+        path: /etc/docker-ansible/nextcloud
+        state: directory
+        owner: "{{username}}"
+        group: "{{groupname}}"
+        mode: 0770
+        recurse: yes
+
+      #only for manual usage, see cronjob
+    - name: Create NC DB Indexing Script
+      copy:
+        dest: /etc/docker-ansible/nextcloud/indexing.sh
+        src: ./config/docker-nextcloud/indexing.sh
+        owner: "{{username}}"
+        group: "{{groupname}}"
+        mode: 0777
+
+      #only for manual usage, see cronjob
+    - name: Create NC Cron Maintain Script
+      copy:
+        dest: /etc/docker-ansible/nextcloud/nc-cron.sh
+        src: ./config/docker-nextcloud/nc-cron.sh
+        owner: "{{username}}"
+        group: "{{groupname}}"
+        mode: 0777
+
+    - name: create Nextcloud env
+      template:
+        src: ./config/docker-nextcloud/nc.j2
+        dest: /etc/docker-ansible/nextcloud/nc.env
+        owner: "{{username}}"
+        group: "{{groupname}}"
+        mode: 0660
+
+    - name: Add Nextcloud cron job to crontab
+      cron:
+        name: "Nextcloud cron job"
+        minute: "*/5"
+        job: "/usr/bin/docker exec -u www-data nextcloud-NCFrontend-1 php /var/www/html/cron.php >/dev/null 2>&1"
+        user: "{{username}}"
+
+    - name: Add Nextcloud Index job to crontab
+      cron:
+        name: "Nextcloud cron job"
+        minute: "40"
+        hour: "23"
+        job: "/usr/bin/docker exec -u www-data nextcloud-NCFrontend-1 php occ db:add-missing-indices"
+        user: "{{username}}"
