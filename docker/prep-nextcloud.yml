@@ -40,6 +40,17 @@
         mode: 0770
         recurse: yes
 
+
+      #only for manual usage, see cronjob
+    - name: Create NC Cron Maintain Script
+      copy:
+        src: ./docker/config/docker-nextcloud/nc-cron.sh
+        dest: /etc/docker-ansible/nextcloud/nc-cron.sh
+        owner: "{{username}}"
+        group: "{{groupname}}"
+        mode: 0777
+
+
       #only for manual usage, see cronjob
     - name: Create NC DB Indexing Script
       copy:
@@ -49,14 +60,6 @@
         group: "{{groupname}}"
         mode: 0777
 
-      #only for manual usage, see cronjob
-    - name: Create NC Cron Maintain Script
-      copy:
-        dest: /etc/docker-ansible/nextcloud/nc-cron.sh
-        src: ./docker/config/docker-nextcloud/nc-cron.sh
-        owner: "{{username}}"
-        group: "{{groupname}}"
-        mode: 0777
 
     - name: create Nextcloud env
       template:
