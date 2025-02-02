@@ -32,6 +32,7 @@
         owner: "{{username}}"
         group: "{{groupname}}"
         mode: 0777
+        remote_src: yes
 
     - name: Save DB password
       template:
