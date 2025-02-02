@@ -3,7 +3,6 @@
 - name: Core Packages and Configurations
   hosts: all
   vars: 
-#change the username and groupname to your username and groupname
     username: jakob
     groupname: jakob
 
@@ -64,6 +63,13 @@
       become: true
       command: bash /home/{{username}}/nerdfonts/install.sh -q
 
+    - name: Create .config directory
+      file:
+        path: /home/{{username}}/.config
+        state: directory
+        owner: "{{username}}"
+        group: "{{groupname}}"
+
     - name: Copy Starship Conf
       copy:
         src: ./config/starship.toml
@@ -74,7 +80,6 @@
       user:
         name: "{{username}}"
         shell: /bin/zsh
-
 
     - name: Add sudo access for the user
       become: yes
