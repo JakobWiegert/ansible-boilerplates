@@ -16,7 +16,7 @@
           - "/run/docker.sock:/run/docker.sock:ro"
           - "/etc/docker-ansible/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro"
           - "/etc/docker-ansible/traefik/certs/:/var/traefik/certs/:rw"
-        env_file: /etc/docker-traefik/traefik.env
+        env_file: /etc/docker-ansible/traefik/traefik.env
         networks:
           - name: exposed_web_network
         restart_policy: unless-stopped
