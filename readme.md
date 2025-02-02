@@ -1,11 +1,10 @@
-# Ansible Playbooks and Configurations
+# Ansible Playbooks and Configurations 🚀
 
 This repository contains a collection of Ansible playbooks and configuration files designed to automate various tasks, with a current focus on Docker deployments. The playbooks are organized into categories based on their target environments (Docker and Linux), and configuration files for tools such as Zsh and Starship are also provided.
 
-## Table of Contents
+## Table of Contents 📚
 
 - [Overview](#overview)
-- [Directory Structure](#directory-structure)
 - [Playbooks](#playbooks)
   - [Docker Playbooks](#docker-playbooks)
   - [Linux Playbooks](#linux-playbooks)
@@ -14,16 +13,11 @@ This repository contains a collection of Ansible playbooks and configuration fil
 - [Contributing](#contributing)
 - [License](#license)
 
-## Overview
+## Overview 🔍
 
 This repository is intended to simplify and automate the setup and maintenance of environments through Ansible. Whether you're preparing your hosts for Docker deployments or managing Linux configurations, these playbooks provide a modular and reusable approach to configuration management.
 
-## Directory Structure
-
-. ├── docker │ ├── createExposedNet.yml # Creates an external Docker network. │ ├── depl-unific-docker.yml # Deploys Unifi Controller and MongoDB containers. │ └── prep-unifi-docker.yml # Prepares the environment for Unifi Controller deployment. ├── linux │ ├── aptUpdate.yml # Updates and upgrades packages on all hosts. │ ├── basicStuff.yml # Installs core packages and configurations. │ ├── instDockerUbuntu.yml # Installs Docker on Ubuntu hosts. │ ├── reboot.yml # Reboots all hosts. │ └── config │ ├── .zshrc # Zsh configuration file. │ └── starship.toml # Starship prompt configuration file. └── README.md
-
-
-## Playbooks
+## Playbooks 🎭
 
 ### Docker Playbooks
 
@@ -50,7 +44,7 @@ This repository is intended to simplify and automate the setup and maintenance o
 - **[linux/reboot.yml](linux/reboot.yml)**  
   Reboots all hosts.
 
-## Configuration Files
+## Configuration Files ⚙️
 
 - **[linux/config/.zshrc](linux/config/.zshrc)**  
   Zsh configuration file.
@@ -58,13 +52,13 @@ This repository is intended to simplify and automate the setup and maintenance o
 - **[linux/config/starship.toml](linux/config/starship.toml)**  
   Starship prompt configuration file.
 
-## Usage
+## Usage 🚀
 
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/JakobWiegert/ansible-boilerplates.git
+   cd ansible-boilerplates
 
     Review and Customize
         Update inventory files or variable definitions as needed.
@@ -83,7 +77,7 @@ To prepare and deploy your Unifi Controller with Docker:
     ansible-playbook docker/prep-unifi-docker.yml -i your_inventory_file
     ansible-playbook docker/depl-unific-docker.yml -i your_inventory_file
 
-Contributing
+Contributing 🤝
 
 Contributions are welcome! If you have suggestions or improvements, please open an issue or submit a pull request.
 
@@ -93,9 +87,9 @@ Contributions are welcome! If you have suggestions or improvements, please open 
     Push to the branch (git push origin feature/your-feature).
     Create a new Pull Request.
 
-License
+License 📄
 
 This project is licensed under the MIT License.
 
-Happy automating!
+Happy automating! 😄
 
