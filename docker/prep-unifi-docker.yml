@@ -41,6 +41,7 @@
         owner: "{{username}}"
         group: "{{groupname}}"
         mode: 0660
+        remote_src: yes
 
     - name: create DB env
       template:
