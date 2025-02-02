@@ -1,0 +1,50 @@
+---
+- hosts: docker
+
+  tasks:
+    - name: Create internal network
+      community.docker.docker_network:
+        name: unifi-internal
+
+    - name: unifi-wlc-db
+      community.docker.docker_container:
+        name: unifi-db
+        image: mongo:7.0 #supported version for unifi
+        volumes:
+          - "unifi-db-data:/data/db"
+          - "/etc/docker-ansible/unifi-wlc/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro"
+        restart_policy: unless-stopped
+        networks:
+          - name: unifi-internal
+        env_file: /etc/docker-ansible/unifi-wlc/unifi-db.env
+        healthcheck:
+          # If this fails or timeouts, the healthcheck fails.
+          test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+          interval: 10s
+          timeout: 10s
+          retries: 5
+          start_interval: 190s
+
+
+    - name: Deploy unifi-wlc
+      community.docker.docker_container:
+        name: unifi-network-application
+        image: lscr.io/linuxserver/unifi-network-application:latest
+        pull: yes
+        ports:
+          - "8080:8080" #Unifi Device Adoption Port / device communication
+          - "8443:8443" # WEBGUI
+          - "3478:3478/udp" #STUN Port
+          - "10001:10001/udp" #deivce discovery
+          - "1900:1900/udp" #optional "discoverable Layer2"
+          - "8843:8843" #optional "Guest Portal HTTPS"
+          - "8880:8880" #optional "Guest Portal HTTP"
+          - "6789:6789" #optional "mobile throughput test"
+          - "5514:5514/udp" #optional "remote syslog"
+        env_file: /etc/docker-ansible/unifi-wlc/unifi-network-application.env
+        volumes:
+          - "unifi-config:/config" #most of the logs and configuration fileis
+        restart_policy: unless-stopped
+        networks:
+          - name: unifi-internal
+          - name: exposed_web_network

@@ -1,0 +1,14 @@
+---
+
+- hosts: all
+  become: true
+  vars:
+    ansible_host_key_checking: false
+
+
+  tasks:
+    - name: Reboot
+      reboot:
+        msg: "automatic reboot from ansible"
+        post_reboot_delay: 30
+        test_command: uptime
