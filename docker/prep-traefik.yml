@@ -30,7 +30,7 @@
         state: directory
         owner: "{{username}}"
         group: "{{groupname}}"
-        mode: 0770
+        mode: 0600
         recurse: yes
 
     - name: Create traefik config file
