@@ -6,4 +6,4 @@
       community.docker.docker_network:
         name: exposed_web_network
         ipam_config:
-         - subnet: 172.19.0.0/16
+         - subnet: 10.69.0.0/16
