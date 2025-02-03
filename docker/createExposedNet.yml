@@ -5,3 +5,5 @@
     - name: Create external network
       community.docker.docker_network:
         name: exposed_web_network
+        ipam_config:
+         - subnet: 172.19.0.0/16
