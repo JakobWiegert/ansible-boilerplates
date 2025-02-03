@@ -30,7 +30,7 @@
       debug:
         var: admin_password
 
-  vars_prompt:
+vars_prompt:
     - name: fqdn
       prompt: "Please enter the FQDN of your Nextcloud instance"
 
