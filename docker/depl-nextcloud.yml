@@ -36,7 +36,7 @@
 
     - name: Deploy NCFrontend
       community.docker.docker_container:
-        pull: "always"
+        pull: true
         name: NCFrontend
         image: nextcloud:28
         volumes:
