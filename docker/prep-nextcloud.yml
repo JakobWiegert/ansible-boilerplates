@@ -5,8 +5,8 @@
     groupname: docker
 
   vars_prompt:
-    - name: cf_dns_api_token
-      prompt: "Please enter your Cloudflare API Token, only DNS edit required, under Manage Account -> Account API Tokens -> Create Token -> Edit Zone DNS"
+    - name: fqdn
+      prompt: "Please enter your Nextcloud FQDN
       private: yes
 
   tasks:
