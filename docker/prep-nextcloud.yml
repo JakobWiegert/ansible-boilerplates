@@ -6,7 +6,7 @@
 
   vars_prompt:
     - name: fqdn
-      prompt: "Please enter your Nextcloud FQDN
+      prompt: "Please enter your Nextcloud FQDN"
       private: yes
 
   tasks:
