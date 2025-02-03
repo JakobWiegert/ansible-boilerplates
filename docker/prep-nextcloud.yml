@@ -83,7 +83,7 @@
 
     - name: Add Nextcloud Index job to crontab
       cron:
-        name: "Nextcloud cron job"
+        name: "Nextcloud Indicies job"
         minute: "40"
         hour: "23"
         job: "/usr/bin/docker exec -u www-data nextcloud-NCFrontend php occ db:add-missing-indices"
