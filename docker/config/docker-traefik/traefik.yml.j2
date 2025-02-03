@@ -4,9 +4,9 @@ global:
 
 # --> (Optional) Change log level and format here ...
 #     - level: [TRACE, DEBUG, INFO, WARN, ERROR, FATAL]
-# log:
-#  level: ERROR
-# <--
+log:
+  level: INFO
+
 
 # --> (Optional) Enable accesslog here ...
 # accesslog: {}
@@ -34,7 +34,7 @@ entryPoints:
 certificatesResolvers:
   cloudflare:
     acme:
-      email: jakob.wiegert@gmail.com # <-- Change this to your email
+      email: {{ cloudflare_email }}
       storage: /var/traefik/certs/cloudflare-acme.json
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
       dnsChallenge:
