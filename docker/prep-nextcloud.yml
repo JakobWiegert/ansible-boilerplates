@@ -7,7 +7,6 @@
   vars_prompt:
     - name: fqdn
       prompt: "Please enter your Nextcloud FQDN"
-      private: yes
 
   tasks:
 
@@ -79,7 +78,7 @@
       cron:
         name: "Nextcloud cron job"
         minute: "*/5"
-        job: "/usr/bin/docker exec -u www-data nextcloud-NCFrontend-1 php /var/www/html/cron.php >/dev/null 2>&1"
+        job: "/usr/bin/docker exec -u www-data nextcloud-NCFrontend php /var/www/html/cron.php >/dev/null 2>&1"
         user: "{{username}}"
 
     - name: Add Nextcloud Index job to crontab
@@ -87,5 +86,5 @@
         name: "Nextcloud cron job"
         minute: "40"
         hour: "23"
-        job: "/usr/bin/docker exec -u www-data nextcloud-NCFrontend-1 php occ db:add-missing-indices"
+        job: "/usr/bin/docker exec -u www-data nextcloud-NCFrontend php occ db:add-missing-indices"
         user: "{{username}}"

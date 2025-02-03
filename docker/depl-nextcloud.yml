@@ -1,6 +1,10 @@
 ﻿---
 - hosts: docker
 
+  vars_prompt:
+    - name: fqdn
+      prompt: "Please enter your Nextcloud FQDN"
+
   tasks:
     - name: Create internal network
       community.docker.docker_network:
@@ -24,6 +28,12 @@
         networks:
           - name: nc-internal
 
+
+    - name: Sleep for 300 seconds and continue with play
+      ansible.builtin.wait_for:
+        timeout: 300
+      delegate_to: localhost
+
     - name: Deploy NCFrontend
       community.docker.docker_container:
         name: NCFrontend
@@ -34,11 +44,11 @@
         labels:
           traefik.enable: "true"
           traefik.http.routers.nextcloud.entrypoints: "web"
-          traefik.http.routers.nextcloud.rule: "Host(`cloud.itwiegert.cc`)"
+          traefik.http.routers.nextcloud.rule: "Host(`{{fqdn}}`)"
           traefik.http.middlewares.https-redirect.redirectscheme.scheme: "https"
           traefik.http.routers.nextcloud.middlewares: "nc-header,https-redirect"
           traefik.http.routers.nextcloud-secure.entrypoints: "websecure"
-          traefik.http.routers.nextcloud-secure.rule: "Host(`cloud.itwiegert.cc`)"
+          traefik.http.routers.nextcloud-secure.rule: "Host(`{{fqdn}}`)"
           traefik.http.middlewares.nc-rep.redirectregex.regex: "https://(.*)/.well-known/(card|cal)dav"
           traefik.http.middlewares.nc-rep.redirectregex.replacement: "https://$$1/remote.php/dav/"
           traefik.http.middlewares.nc-rep.redirectregex.permanent: "true"
