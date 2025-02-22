@@ -15,7 +15,7 @@
           - curl
           - gnupg-agent
           - software-properties-common
-          - pip
+          - python3-pip
         update_cache: true
 
     - name: Add docker gpg key
