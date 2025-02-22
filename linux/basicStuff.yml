@@ -26,6 +26,7 @@
           - curl
           - chrony
           - lvm2
+          - qemu-guest-agent
         update_cache: true
 
     - name: Download spaceship using get_url
