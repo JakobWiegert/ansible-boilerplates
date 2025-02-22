@@ -40,16 +40,6 @@
           - docker-compose-plugin
         update_cache: true
 
-    - name: Install bottle python package
-      ansible.builtin.pip:
-        name: requests
-        state: present
-
-    - name: Install bottle python package
-      ansible.builtin.pip:
-        name: docker-py
-        state: present
-
 
     - name: adding existing user '{{ username }}' to group docker
       user:
