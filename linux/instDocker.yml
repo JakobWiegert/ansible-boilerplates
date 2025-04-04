@@ -51,6 +51,12 @@
           update_cache: true
           state: latest
 
+    - name: startup docker and set boot enabled
+      service:
+        name: docker
+        enabled: true
+        state: started
+
     - name: create docker group
       group:
         name: docker
