@@ -13,3 +13,14 @@
       when: ansible_pkg_mgr == 'apt'
       ansible.builtin.apt:
         upgrade: dist
+
+    - name: Update APK
+      when: ansible_pkg_mgr == 'apk'
+      conmmunity.general.apk:
+        update_cache: true
+
+    - name: Upgrade APK
+      when: ansible_pkg_mgr == 'apk'
+      conmmunity.general.apk:
+        available: true
+        upgrade: true
