@@ -16,11 +16,11 @@
 
     - name: Update APK
       when: ansible_pkg_mgr == 'apk'
-      conmmunity.general.apk:
+      community.general.apk:
         update_cache: true
 
     - name: Upgrade APK
       when: ansible_pkg_mgr == 'apk'
-      conmmunity.general.apk:
+      community.general.apk:
         available: true
         upgrade: true

@@ -46,7 +46,7 @@
 
     - name: install docker apk
       when: ansible_pkg_mgr == 'apk'
-      apk:
+      community.general.apk::
           name: docker
           update_cache: true
           state: latest
