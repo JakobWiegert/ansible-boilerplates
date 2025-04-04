@@ -1,0 +1,29 @@
+﻿---
+- hosts: '{{ host }}' 
+  vars:
+    username: jakob
+    groupname: docker
+
+  vars_prompt:
+    - name: curse_api
+      prompt: "Please enter your curse api key"
+
+  tasks:
+
+    - name: Creates directory for Configs
+      become: yes
+      ansible.builtin.file:
+        path: /etc/docker-ansible/mc
+        state: directory
+        owner: "{{username}}"
+        group: "{{groupname}}"
+        mode: 0770
+        recurse: yes
+
+    - name: create Nextcloud env
+      template:
+        src: config/docker-mc/mc.j2
+        dest: /etc/docker-ansible/mc/mc.env
+        owner: "{{username}}"
+        group: "{{groupname}}"
+        mode: 0660

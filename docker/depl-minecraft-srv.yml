@@ -1,0 +1,20 @@
+﻿---
+- hosts: dm02
+
+  tasks:
+
+    - name: Deploy Minecraft Server
+      community.docker.docker_container:
+        name: minecraft_server
+        image: itzg/minecraft-server
+        pull: yes
+        ports:
+          - 25565:25565
+        env_file: /etc/docker-ansible/mc/mc.env
+        volumes:
+          - minecraft-data:/data
+        restart_policy: unless-stopped
+        tty: true
+        stdin_open: true
+        networks:
+          - name: exposed_web_network
